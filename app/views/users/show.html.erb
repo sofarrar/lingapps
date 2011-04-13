@@ -2,7 +2,8 @@
   <tr>
     <td class="main">
       <h1>
-        <%= @user.name %>, <%= @user.email %>
+        <gravatar_image_tag @user.email/>
+        <%= @user.name %>
       </h1>
     </td>
     <td class="sidebar round">
