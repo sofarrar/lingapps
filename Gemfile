@@ -7,7 +7,14 @@ gem 'rails', '3.0.6'
 
 gem 'sqlite3'
 
-#gem 'gravatar_image_tag'
+gem 'gravatar_image_tag'
+
+gem 'will_paginate', '3.0.pre2'
+
+
+group :development do
+	gem 'faker', '0.3.1'
+end
 
 # Use unicorn as the web server
 # gem 'unicorn'
