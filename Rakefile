@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-Kawapanan::Application.load_tasks
+Lingapps::Application.load_tasks

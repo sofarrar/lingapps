@@ -1,4 +1,4 @@
-Kawapanan::Application.routes.draw do
+Lingapps::Application.routes.draw do
   get "sessions/new"
 
   resources :users
@@ -10,6 +10,7 @@ resources :sessions, :only => [:new, :create, :destroy]
 
 
   match '/contact', :to => 'pages#contact'
+  match '/about', :to => 'pages#about'
   root :to => 'pages#home'
 
 
