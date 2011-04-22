@@ -1,7 +1,8 @@
 Lingapps::Application.routes.draw do
 
 
-  root :to => 'pages#home'
+  root :to => 'pages#dashboard'
+
   get "sessions/new"
 
   resources :users
