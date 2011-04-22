@@ -1,4 +1,10 @@
 class PagesController < ApplicationController
+
+  def index 
+    @title = "Index"
+  end
+
+
   def home
     @title = "Home"
   end

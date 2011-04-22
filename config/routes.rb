@@ -1,7 +1,7 @@
 Lingapps::Application.routes.draw do
 
 
-  root :to => 'pages#dashboard'
+  root :to => 'pages#index'
 
   get "sessions/new"
 
