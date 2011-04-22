@@ -1,4 +1,7 @@
 Lingapps::Application.routes.draw do
+
+
+  root :to => 'pages#home'
   get "sessions/new"
 
   resources :users
@@ -19,7 +22,6 @@ Lingapps::Application.routes.draw do
   match '/dashboard', :to => 'pages#dashboard'
   match '/contact', :to => 'pages#contact'
   match '/about', :to => 'pages#about'
-  root :to => 'pages#home'
 
 
 
