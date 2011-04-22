@@ -1,0 +1,34 @@
+<h1>New Project</h1>
+
+<%= form_for(@project) do |f| %>
+	<%= render 'shared/error_messages', :object => f.object %>
+
+
+	<div class="field">
+  	<%= f.label :name %><br />
+  	<%= f.text_field :name %>
+	</div>
+
+	<%= f.select :user_id, ['test1','test2'] }  %>
+
+
+	<div class="field">
+  	<%= f.label :activity %><br />
+  	<%= f.text_field :activity %>
+	</div>
+	<div class="field">
+  	<%= f.label :language %><br />
+  	<%= f.text_field :language %>
+	</div>
+
+
+	<div class="area">
+  	<%= f.label :description %><br />
+  	<%= f.text_area :description, :size => "20x12"  %>
+	</div>
+
+	<div class="actions">
+	<%= f.submit "Create" %>
+	</div>
+
+<% end %>

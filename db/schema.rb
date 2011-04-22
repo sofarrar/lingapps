@@ -10,11 +10,34 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110417012315) do
+ActiveRecord::Schema.define(:version => 20110420001208) do
+
+  create_table "expressions", :force => true do |t|
+    t.string   "form"
+    t.integer  "language_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "languages", :force => true do |t|
     t.string   "name"
     t.string   "code"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "projects", :force => true do |t|
+    t.string   "name"
+    t.string   "description"
+    t.string   "activity"
+    t.integer  "language_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "translations", :force => true do |t|
+    t.integer  "source_id"
+    t.integer  "target_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -30,5 +53,11 @@ ActiveRecord::Schema.define(:version => 20110417012315) do
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true
+
+  create_table "word_lists", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end
