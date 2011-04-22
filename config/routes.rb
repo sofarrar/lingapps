@@ -1,7 +1,7 @@
 Lingapps::Application.routes.draw do
 
-
-  root :to => 'pages#index'
+	root :to => 'pages#home'
+  match '/', :to => 'pages#home'
 
   get "sessions/new"
 
