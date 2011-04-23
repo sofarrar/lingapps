@@ -9,8 +9,8 @@
   	<%= f.text_field :name %>
 	</div>
 
-	<%= f.select :user_id, ['test1','test2'] }  %>
-
+	
+	<%= f.select :user, Language.all.collect %>
 
 	<div class="field">
   	<%= f.label :activity %><br />

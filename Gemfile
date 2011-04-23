@@ -16,6 +16,9 @@ group :development do
 	gem 'faker', '0.3.1', :require => false
 end
 
+gem "net-ssh"
+gem "net-sftp"
+
 # Use unicorn as the web server
 # gem 'unicorn'
 

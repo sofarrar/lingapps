@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(:version => 20110420001208) do
     t.string   "description"
     t.string   "activity"
     t.integer  "language_id"
+    t.integer  "word_list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

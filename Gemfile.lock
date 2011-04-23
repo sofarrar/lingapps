@@ -41,6 +41,9 @@ GEM
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
     mime-types (1.16)
+    net-sftp (2.0.5)
+      net-ssh (>= 2.0.9)
+    net-ssh (2.1.4)
     polyglot (0.3.1)
     rack (1.2.2)
     rack-mount (0.6.14)
@@ -74,6 +77,8 @@ PLATFORMS
 DEPENDENCIES
   faker (= 0.3.1)
   gravatar_image_tag
+  net-sftp
+  net-ssh
   rails (= 3.0.6)
   sqlite3
   will_paginate (= 3.0.pre2)

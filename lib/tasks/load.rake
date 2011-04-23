@@ -1,6 +1,9 @@
 require 'csv'
-namespace :load do
+require 'net/ssh'
+require 'net/sftp'
 
+
+namespace :load do
 
 	#load:translations (populates expressions table and translation table)
 	#load:languages (populates languages table)
@@ -78,7 +81,6 @@ namespace :load do
     puts "Finished!"
 	end
 
-
   desc "Load Languages"
   task :languages => :environment do
     # get paths to languages 
@@ -131,7 +133,7 @@ namespace :load do
 			w = WordList.new(
 				:name => wl_name
 			)
-
+			w.save
       #loop over file and create expressions
       CSV.foreach(file) do |columns|
        	puts columns[0] 
@@ -156,5 +158,47 @@ namespace :load do
     end
 
 	end
+
+=begin
+	#todo, still need to iterate over translations.csv, like in the above local version
+	#of the task
+	desc "Load Translations"
+	task :translations => :environment do
+ 
+
+ 
+   server = 'broadspeak.com'
+    username = 'remoteloader'
+    password = 'l0@dRunn3r'
+    remote_path = "/home/dropbox/lingapps"
+
+
+ 
+    Net::SFTP.start(server, username, :password => password) do |sftp|
+   
+      sftp.dir.glob(remote_path, "*.wordlist") do |entry|
+			
+				
+        file_path = remote_path + "/" + entry.name
+        
+        puts "Loading '#{file_path}'"
+
+				sftp.file.open(file_path, "r") do |file|
+
+				 ActiveRecord::Base.transaction do
+ 						while line = file.gets do
+              line = line.strip
+							next if line.empty?
+							puts line	
+						end
+
+					end
+				end
+      end      
+    end
+
+  end
+
+=end
 
 end
