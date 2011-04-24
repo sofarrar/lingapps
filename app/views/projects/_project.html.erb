@@ -1,0 +1,9 @@
+<h1>	<%= @project.name  %></h1>
+
+
+<h3>Object Language =
+	<%= Language.find_by_id(@project.language_id) %>
+</h3>
+	<p></p>
+<h3>Project Description</h3>
+	<p><%= @project.description %></p>

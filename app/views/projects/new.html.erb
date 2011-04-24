@@ -10,17 +10,36 @@
 	</div>
 
 	
-	<%= f.select :user, Language.all.collect %>
 
 	<div class="field">
   	<%= f.label :activity %><br />
   	<%= f.text_field :activity %>
 	</div>
-	<div class="field">
-  	<%= f.label :language %><br />
-  	<%= f.text_field :language %>
+
+	<div class="select">
+		<p><b>Select the object language</b></p> <% @lang_names = [] %>
+	<% @lang_lists = Language.all.collect %>
+	<% @lang_lists.each do |language| %>
+		<% @lang_names << language.name %> 
+	<% end %>
+
+	<%= f.select :language_id, @lang_names %>
+
 	</div>
 
+
+
+
+	<div class="select">
+		<p><b>Select a starter wordlist</b></p> <% @wl_names = [] %>
+	<% @word_lists = WordList.all.collect %>
+	<% @word_lists.each do |word_list| %>
+		<% @wl_names << word_list.name %> 
+	<% end %>
+
+	<%= f.select :word_list_id, @wl_names %>
+
+	</div>
 
 	<div class="area">
   	<%= f.label :description %><br />

@@ -1,5 +1,5 @@
 class Project < ActiveRecord::Base
-	belongs_to :user
+	has_one :user
 	has_one :language # :object_language,  :class_name => "Language"	
 	has_many :expressions
 

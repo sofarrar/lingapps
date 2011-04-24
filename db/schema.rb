@@ -15,6 +15,7 @@ ActiveRecord::Schema.define(:version => 20110420001208) do
   create_table "expressions", :force => true do |t|
     t.string   "form"
     t.integer  "language_id"
+    t.integer  "word_list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -32,6 +33,7 @@ ActiveRecord::Schema.define(:version => 20110420001208) do
     t.string   "activity"
     t.integer  "language_id"
     t.integer  "word_list_id"
+    t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -46,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20110420001208) do
   create_table "users", :force => true do |t|
     t.string   "name"
     t.string   "email"
+    t.integer  "project_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "encrypted_password"

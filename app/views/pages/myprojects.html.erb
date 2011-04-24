@@ -1,0 +1,11 @@
+<h1>My Projects</h1>
+
+<ul>
+<% current_user.projects.each do |project|  %>
+	<li>
+		<%= link_to project.name, project %>
+	</li>
+<% end %>
+</ul>
+
+<%= button_to "New Project", {:controller => 'projects', :action => 'new'}, :method => :get  %>

@@ -22,7 +22,7 @@ Lingapps::Application.routes.draw do
   match '/dashboard', :to => 'pages#dashboard'
   match '/contact', :to => 'pages#contact'
   match '/about', :to => 'pages#about'
-
+  match '/myprojects', :to => 'pages#myprojects'
 
 
 

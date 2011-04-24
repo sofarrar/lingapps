@@ -7,6 +7,7 @@ class WordListsController < ApplicationController
 
 	def show
   	@word_list = WordList.find(params[:id])
+		@expressions = @word_list.expressions
 	end
 
 end

@@ -16,13 +16,14 @@ class ProjectsController < ApplicationController
 	end
 
 	def create
-		@language = Language.find_by_code(params[:project][:language])
-		
+		@language = Language.find_by_name(params[:project][:language])
 		
 		@project = current_user.projects.build(:name => params[:project][:name], 
 			:description => params[:project][:description],	
 			:activity => params[:project][:activity],
-			:language_id => @language.id)
+			:language_id => @language.id,
+			:user_id => current_user.id
+		)
 
 		
    if @project.save

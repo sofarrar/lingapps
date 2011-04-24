@@ -5,101 +5,29 @@ require 'net/sftp'
 
 namespace :load do
 
-	#load:translations (populates expressions table and translation table)
 	#load:languages (populates languages table)
+	#load:translations (populates expressions table and translation table)
 	#load:word_lists (populates expressions and links to wordlists)
 
-	#STRATEGY
-	#load translation relation file which contains file names of single-column word lists
-	#then load each list of expressions from word lists
-	#finally relate expressions in the translation table
-	desc "Load Translations"
-	task :translations => :environment do
-    file_path = File.expand_path(File.join(File.dirname(__FILE__),'../../db/load', 'translations.csv'))
-		print "Loading translations \n"
 
-		ActiveRecord::Base.transaction do
-			i=0
-			CSV.foreach(file_path) do |columns|
-				source_file = File.expand_path(File.join(File.dirname(__FILE__),'../../db/load',columns[0]))
-				target_file = File.expand_path(File.join(File.dirname(__FILE__),'../../db/load',columns[1]))
-				
-
-				source_language = columns[0].scan(/\.[a-z]{3}\./)[0].gsub('.','')
-				target_language = columns[1].scan(/\.[a-z]{3}\./)[0].gsub('.','')
-
-				source_expressions = []
-				target_expressions = []
-
-				CSV.foreach(source_file) do |source_cols|
-					
-					#todo: test to see if expression already exists, find_by_form_language ???
-					#foo = Expression.find_by_form(source_cols[0])
-
-
-					e1 = Expression.new(
-						:form => source_cols[0],
-					  :language_id => Language.find_by_code(source_language).id	
-					)	
-
-					e1.save
-
-					source_expressions << e1.id
-				end
-
-
-
-				CSV.foreach(target_file) do |target_cols|
-					
-
-					e2 = Expression.new(
-						:form => target_cols[0],
-					  :language_id => Language.find_by_code(target_language).id	
-					)
-
-					e2.save
-
-					target_expressions << e2.id
-	
-				end
-
-				#iterate over expression id's
-				(0..source_expressions.length).each do |n|
-
-					Translation.create(
-						:source_id => source_expressions[n],
-						:target_id => target_expressions[n]	
-				)
-				end
-        print '.' if i % 100 == 0
-        i += 1
-   			
-			end
-				
-		end
-
-    puts "Finished!"
-	end
-
-  desc "Load Languages"
+	desc "Load Languages"
   task :languages => :environment do
     # get paths to languages 
     file_path = File.expand_path(File.join(File.dirname(__FILE__),'../../db/load', 'languages.csv'))
     
-    print "Loading Languages"
+    print "Loading Languages...\n"
     
     ActiveRecord::Base.transaction do
       i = 0  
       CSV.foreach(file_path) do |columns|
         l = Language.find_by_code(columns[1])
         if l then
-          l.name = columns[0]#; l.display = !(columns[2].nil?)
+          l.name = columns[0]
           l.save
         else
           Language.create(
             :name => columns[0],
-            :code => columns[1]#,
-            #:display => !(columns[2].nil?)
+            :code => columns[1]
           )
         end
         print '.' if i % 100 == 0
@@ -113,6 +41,93 @@ namespace :load do
 
 
 
+	#STRATEGY
+	#1. load translation relation file which contains file names of single-column word lists
+	#2. then load each list of expressions from word lists
+	#3. finally relate expressions in the translation table
+	desc "Load Translations"
+	task :translations => :environment do
+    file_path = File.expand_path(File.join(File.dirname(__FILE__),'../../db/load', 'translations.csv'))
+		print "Loading translations... \n"
+
+		ActiveRecord::Base.transaction do
+			i=0
+			CSV.foreach(file_path) do |columns|
+				#STEP 1
+				source_file = File.expand_path(File.join(File.dirname(__FILE__),'../../db/load',columns[0]))
+				target_file = File.expand_path(File.join(File.dirname(__FILE__),'../../db/load',columns[1]))
+				
+
+				source_language_code = columns[0].scan(/\.[a-z]{3}\./)[0].gsub('.','')
+				target_language_code = columns[1].scan(/\.[a-z]{3}\./)[0].gsub('.','')
+
+				puts "\t\t "+columns[0]+" and "+columns[1]
+
+
+				source_expressions = []
+				target_expressions = []
+				
+				#STEP 2a, load source expressions
+				CSV.foreach(source_file) do |source_cols|
+					
+					source_language = Language.find_by_code(source_language_code)
+					source_e = Expression.find_by_form_and_language_id(source_cols[0], source_language.id)
+					
+					if (!source_e)
+
+						source_e = Expression.new(
+							:form => source_cols[0],
+					  	:language_id =>source_language.id	
+						)
+						source_e.save	
+					end
+					
+						source_expressions << source_e.id
+				end
+
+
+				#STEP 2b, load target expresssion
+				CSV.foreach(target_file) do |target_cols|
+					
+					target_language = Language.find_by_code(target_language_code)
+
+					target_e = Expression.find_by_form_and_language_id(target_cols[0], target_language.id)
+					
+					if (!target_e)
+
+						target_e = Expression.new(
+							:form => target_cols[0],
+					  	:language_id => target_language.id	
+						)
+
+						target_e.save
+					end
+						target_expressions << target_e.id
+					
+				end
+
+				#STEP 3, iterate over expression id's to build translation table
+				(0..source_expressions.length-1).each do |n|
+			
+					trans = Translation.find_by_source_id_and_target_id(source_expressions[n], target_expressions[n])					
+					if(!trans)
+						Translation.create(
+							:source_id => source_expressions[n],
+							:target_id => target_expressions[n]	
+						)
+
+						puts "Added "+n.to_s+" translation pairs"
+					end
+				end
+   			
+			end
+				
+		end
+
+    puts "Finished!"
+	end
+
+  
   desc "Load WordLists"
   task :word_lists => :environment do
 
@@ -129,27 +144,33 @@ namespace :load do
       code = file.scan(/\.[a-z]{3}\./)[0].gsub('.','')
 			
 			#create the word_list				
-			wl_name = file.scan(/[a-z]+[0-9]+\.[a-z]{3}/)[0]
+			wl_name = file.scan(/[a-z]+[0-9]+\./)[0].gsub('.','')
 			w = WordList.new(
-				:name => wl_name
+				:name => wl_name+" ("+Language.find_by_code(code).name+")"
 			)
 			w.save
       #loop over file and create expressions
       CSV.foreach(file) do |columns|
        	puts columns[0] 
         #check to see if expression exists
-        e= Expression.find_by_form(columns[0])                       
+        e= Expression.find_by_form_and_language_id(columns[0], Language.find_by_code(code).id)                       
         if (!e)
           new_e = Expression.new(
             :form => columns[0],
-
+						:word_list_id => w.id,
 					  :language_id => Language.find_by_code(code).id	
           )
 					
 					new_e.save
 					w.expressions << new_e
 
+				#if expression does exist
+				else
+					e.word_list_id = w.id
+					e.save
         end
+
+				
 
       end
 			

@@ -1,4 +1,9 @@
 <h1>Dashboard</h1>
 
+<p>LingApps contains various apps:</p>
 
-<%= button_to "New Project", newproj_path %>
+<ul>
+	<li><b>In Situ:</b> An app for managing and using word lists.
+	</li>  
+<%= button_to "New Project", {:controller => 'projects', :action => 'new'}, :method => :get  %>
+</ul>
