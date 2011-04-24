@@ -3,7 +3,7 @@
 }
 
 body {
-    background: #5CB3FF;
+    background: #D0E7F0;
 }
 
 header {
@@ -24,6 +24,14 @@ section {
 
 section h1 {
     font-size: 200%;
+		/*blue*/
+	  color:  #333B8A;
+		/*red*/
+		color: #BF2F63;	
+		/*green*/
+		color: #408E69;
+		/*gold*/
+		color: #C0A942;
 }
 
 /* Links */
@@ -57,13 +65,13 @@ nav {
 
 nav ul {
     margin: 0;
-              padding: 0;
+    padding: 0;
 }
 
 nav ul li {
     list-style-type: none;
-      display: inline-block;
-                 padding: 0.2em 0;
+    display: inline-block;
+    padding: 0.2em 0;
 }
 
 nav ul li a {
@@ -79,6 +87,41 @@ nav ul li a:hover {
     text-decoration: underline;
 }
 
+navb {
+
+    float: right;
+    background-color: #C0A942;
+    padding: 0 0.7em;
+    white-space: nowrap;
+}
+
+navb ul {
+    margin: 0;
+    padding: 0;
+}
+
+navb ul li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 0.2em 0;
+}
+
+navb ul li a {
+    padding: 0 5px;
+    font-weight: bold;
+}
+
+navb ul li a:visited {
+    color: white;
+}
+
+navb ul li a:hover {
+    text-decoration: underline;
+}
+
+
+
+
 /* Sign up button */
 
 a.signup_button {
@@ -88,7 +131,7 @@ a.signup_button {
                    text-align: center;
                      width: 190px;
                               color: #fff;
-                                       background: #006400;
+                                       background:  #C0A942;
                                                      font-size: 150%;
                                                        font-weight: bold;
                                                          padding: 20px;
@@ -100,8 +143,8 @@ a.small_button {
   display: block;
   text-align: center;
   width: 100px;
-  color: #fff;
-  background: #006400;
+  color: #C0A942
+  background:  #C0A942;
   font-size: 100%;
   font-weight: bold;
   padding: 20px;
@@ -206,3 +249,4 @@ ul.users {
 .users li {
   list-style: none;
 }
+

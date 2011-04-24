@@ -18,4 +18,12 @@
             <% end %>
         </ul>
     </nav>
+
+		<%if ! signed_in? %>
+		<navb class="round">
+			<ul>
+				<li><%= link_to "SignUp", signup_path %></li>
+			</ul>
+		</navb>
+		<% end %>
 </header>
