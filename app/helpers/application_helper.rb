@@ -16,3 +16,11 @@ module ApplicationHelper
       image_tag("ling-apps-logo.jpg", :alt => "Sample App", :class => "round")
         end
   end
+
+
+  def signup_button 
+      image_tag("sign_up_yellow.png", :alt => "Sample App", :class => "round")
+  end
+
+
+

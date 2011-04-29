@@ -1,6 +1,6 @@
 class Project < ActiveRecord::Base
 	has_one :user
-	has_one :language # :object_language,  :class_name => "Language"	
+	has_one :language 	
 	has_many :expressions
 
 	has_many :word_lists
