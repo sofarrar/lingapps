@@ -5,6 +5,11 @@ require 'net/sftp'
 
 namespace :load do
 
+
+desc 'This loads all data'
+task :all => ["load:languages", "load:translations", "load:word_lists"]
+
+
 	#load:languages (populates languages table)
 	#load:translations (populates expressions table and translation table)
 	#load:word_lists (populates expressions and links to wordlists)
@@ -35,8 +40,7 @@ namespace :load do
       end
     end
     
-    puts "Finished!"
-
+    puts "Finished adding Languages"
   end
 
 
@@ -61,7 +65,10 @@ namespace :load do
 				source_language_code = columns[0].scan(/\.[a-z]{3}\./)[0].gsub('.','')
 				target_language_code = columns[1].scan(/\.[a-z]{3}\./)[0].gsub('.','')
 
-				puts "\t\t "+columns[0]+" and "+columns[1]
+				#puts source_language_code			
+				#puts target_language_code			
+
+				#puts "\t\t "+columns[0]+" and "+columns[1]
 
 
 				source_expressions = []
@@ -69,10 +76,13 @@ namespace :load do
 				
 				#STEP 2a, load source expressions
 				CSV.foreach(source_file) do |source_cols|
-					
+
 					source_language = Language.find_by_code(source_language_code)
 					source_e = Expression.find_by_form_and_language_id(source_cols[0], source_language.id)
-					
+
+					#puts source_language
+					#puts source_e					
+	
 					if (!source_e)
 
 						source_e = Expression.new(
@@ -116,7 +126,7 @@ namespace :load do
 							:target_id => target_expressions[n]	
 						)
 
-						puts "Added "+n.to_s+" translation pairs"
+						#puts "Added "+n.to_s+" translation pairs"
 					end
 				end
    			
@@ -124,7 +134,7 @@ namespace :load do
 				
 		end
 
-    puts "Finished!"
+    puts "Finished adding translations!"
 	end
 
   
@@ -144,14 +154,14 @@ namespace :load do
       code = file.scan(/\.[a-z]{3}\./)[0].gsub('.','')
 			
 			#create the word_list				
-			wl_name = file.scan(/[a-z]+[0-9]+\./)[0].gsub('.','')
+			wl_name = file.scan(/[A-z]+-[0-9]+\./)[0].gsub('.','')
 			w = WordList.new(
 				:name => wl_name+" ("+Language.find_by_code(code).name+")"
 			)
 			w.save
       #loop over file and create expressions
       CSV.foreach(file) do |columns|
-       	puts columns[0] 
+       	#puts columns[0] 
         #check to see if expression exists
         e= Expression.find_by_form_and_language_id(columns[0], Language.find_by_code(code).id)                       
         if (!e)
@@ -178,6 +188,7 @@ namespace :load do
 
     end
 
+    	puts "Finished adding word_lists"
 	end
 
 =begin

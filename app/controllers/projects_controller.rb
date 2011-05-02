@@ -1,6 +1,10 @@
 class ProjectsController < ApplicationController
 
 	before_filter :authenticate
+
+	def index
+		render 'pages/login'	
+	end
 	
 
 	def show
