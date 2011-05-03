@@ -119,7 +119,11 @@ navb ul li a:hover {
     text-decoration: underline;
 }
 
+navc{
 
+    float: right;
+		background-color: 0;
+}
 
 
 /* Sign up button */

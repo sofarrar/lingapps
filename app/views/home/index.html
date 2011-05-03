@@ -2,15 +2,32 @@
 	<p>
 	 LingApps is a site dedicated to web and mobile apps for linguistics.
   </p>
-	<p>With LingApps, you can:
+	<h3>With LingApps, you can:</h3>
 	<ul>
-		<li>Browse data </li>
 		<li>Create data </li>
-		<li>Use apps </li>
+			<ul>
+				<li>Word list <%= link_to "projects", projects_path %> (sign in required) </li>
+			</ul>	
+		<li>Browse data </li>
+			<ul>
+				<li>
+					<%= link_to "word lists", word_lists_path %>
+				</li>
+				<li>
+					<%= link_to "translations", translations_path %>
+				</li>
+			</ul>
+		
+		<li>Download <%= link_to "mobile apps", mobileapps_path %> </li>
+
+
 	</ul>
 	</p>
-  <
-<!--%= link_to "Sign up now!", signup_path, :class => "signup_button round" 
--->
+  
 
-<input type="image" src="images/sign_up_yellow_small.png" value="submit" alt="submit"/>
+
+<input type="image" src="images/sign_up_yellow_small.png" value="submit" alt="submit" onClick="parent.location='<%= signup_path  %>'"/>
+
+	
+
+

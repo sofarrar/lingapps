@@ -11,6 +11,7 @@ Lingapps::Application.routes.draw do
 	resources :expressions
 	resources :translations
 	resources :word_lists
+	#resources :participants #I doubt we'll need this; just a simple string for now
 
 	match '/newproj', :to => 'projects#new'
 
@@ -23,8 +24,8 @@ Lingapps::Application.routes.draw do
   match '/contact', :to => 'pages#contact'
   match '/about', :to => 'pages#about'
   match '/myprojects', :to => 'pages#myprojects'
-
-
+  match '/insitu', :to => 'pages#insitu'
+  match '/mobileapps', :to => 'pages#mobileapps'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -3,7 +3,7 @@ class CreateParticipants < ActiveRecord::Migration
     create_table :participants do |t|
       t.string :role
       t.string :name
-	  t.integer :project_id
+	    t.integer :project_id
       t.timestamps
     end
   end

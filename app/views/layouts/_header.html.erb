@@ -7,6 +7,7 @@
 						<li><%= link_to "Users", users_path %></li>
             <li><%= link_to "Profile", current_user %></li>
             <% end %>
+						<li><%= link_to "Mobile", mobileapps_path  %></li>
             <li><%= link_to "Dashboard", dashboard_path %></li>
             <% if signed_in? %>
 					
@@ -20,10 +21,8 @@
     </nav>
 
 		<%if ! signed_in? %>
-		<navb class="round">
-			<ul>
-				<li><%= link_to "SignUp", signup_path %></li>
-			</ul>
-		</navb>
+			<navc class="button">
+			<input type="image" src="images/sign_up_yellow_small.png" value="submit" alt="submit" onClick="parent.location='<%= signup_path  %>'"/>
+			</navc>
 		<% end %>
 </header>
