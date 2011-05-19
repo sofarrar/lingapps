@@ -141,7 +141,7 @@ task :all => ["load:languages", "load:translations", "load:word_lists"]
   desc "Load WordLists"
   task :word_lists => :environment do
 
-		puts "start..."
+		puts "Loading WordLists start..."
 
 		#get dir *.wordlist 
     file_path = File.expand_path(File.join(File.dirname(__FILE__),'../../db/load'))
@@ -155,7 +155,8 @@ task :all => ["load:languages", "load:translations", "load:word_lists"]
 			
 			#create the word_list				
 			wl_name = file.scan(/[A-z]+-[0-9]+\./)[0].gsub('.','')
-			w = WordList.new(
+			puts 'creating wordlist...'
+            w = WordList.new(
 				:name => wl_name+" ("+Language.find_by_code(code).name+")"
 			)
 			w.save
