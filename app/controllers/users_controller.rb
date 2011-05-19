@@ -5,16 +5,24 @@ class UsersController < ApplicationController
 
 
 	def index
-    @title = "All users"
-  	@users = User.paginate(:per_page => 10, :page => params[:page])
-	end
+        @title = "All users"
+  	    @users = User.paginate(:per_page => 10, :page => params[:page])
+			
+        respond_to do |format|
+            format.json {render :html => @users}
+			format.json {render :json => Users.all}
+		end
+
+
+    end
 
 
 	
 	def show
-  	@user = User.find(params[:id])
-  	@title = @user.name
-	end
+  	    @user = User.find(params[:id])
+  	    @title = @user.name
+	    
+    end
 
 	def new
     @user = User.new
