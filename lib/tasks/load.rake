@@ -151,11 +151,13 @@ task :all => ["load:languages", "load:translations", "load:word_lists"]
 		Dir.glob(File.join(file_path,'*.wordlist')).each do |file|
       #determine language code assuming this format:
       # swadesh.eng.wordlist
+      puts 'loading '+file
       code = file.scan(/\.[a-z]{3}\./)[0].gsub('.','')
-			
+	    puts 'file ok'
+
 			#create the word_list				
 			wl_name = file.scan(/[A-z]+-[0-9]+\./)[0].gsub('.','')
-			puts 'creating wordlist...'
+			puts 'wordlist name ok...'
             w = WordList.new(
 				:name => wl_name+" ("+Language.find_by_code(code).name+")"
 			)
