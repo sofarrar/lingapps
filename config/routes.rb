@@ -4,7 +4,9 @@ Lingapps::Application.routes.draw do
 
   get "sessions/new"
 
-  resources :users
+    match '/users/query', :to => 'users#query'
+
+    resources :users
 	resources :sessions, :only => [:new, :create, :destroy]
 	resources :projects  
 	resources :languages
@@ -26,6 +28,7 @@ Lingapps::Application.routes.draw do
   match '/myprojects', :to => 'pages#myprojects'
   match '/insitu', :to => 'pages#insitu'
   match '/mobileapps', :to => 'pages#mobileapps'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

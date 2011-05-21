@@ -3,31 +3,39 @@ class UsersController < ApplicationController
 	before_filter :correct_user, :only => [:edit, :update]
 	before_filter :admin_user, :only => :destroy
 
+    respond_to :html, :json
 
 	def index
         @title = "All users"
   	    @users = User.paginate(:per_page => 10, :page => params[:page])
-			
+   
+        respond_with(@users)
+
+=begin        
         respond_to do |format|
-            format.json {render :html => @users}
-			format.json {render :json => Users.all}
+            format.json {render :html => User.all}
+			format.json {render :json => User.all}
 		end
-
-
+=end
     end
 
+    def query
+
+        respond_with(User.find_by_name(params[:name]).id)
+    end
 
 	
 	def show
-  	    @user = User.find(params[:id])
+
+        @user = User.find(params[:id])
   	    @title = @user.name
 	    
     end
 
 	def new
-    @user = User.new
-    @title = "Sign up"
-  end
+        @user = User.new
+        @title = "Sign up"
+    end
 
   def create
     @user = User.new(params[:user])
