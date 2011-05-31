@@ -13,12 +13,13 @@ class UsersController < ApplicationController
 
 =begin        
         respond_to do |format|
-            format.json {render :html => User.all}
+            format.html {render :html => User.all}
 			format.json {render :json => User.all}
 		end
 =end
     end
-
+    
+    #sof added this to experiment
     def query
 
         respond_with(User.find_by_name(params[:name]).id)
