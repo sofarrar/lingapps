@@ -8,7 +8,7 @@ class ProjectsController < ApplicationController
 	
 
 	def show
-  	@project = Project.find(params[:id])
+  	  @project = Project.find(params[:id])
 
 
 	end
@@ -30,10 +30,10 @@ class ProjectsController < ApplicationController
 		)
 
 		
-   if @project.save
+     if @project.save
       flash[:success] = "Successfully created "+@project.name
-    	redirect_to @project
-		end
+      redirect_to @project
+     end
   end
 
 

@@ -9,10 +9,6 @@ class SessionsController < ApplicationController
   end
 
    def create 
-    puts "*** session create"  
-    puts params #[:session]
-    puts params[:session][:email]
-    puts "******"
 
     user = User.authenticate(params[:session][:email],
                                    params[:session][:password])

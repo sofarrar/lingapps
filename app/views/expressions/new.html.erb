@@ -1,0 +1,44 @@
+<h1>Create a new expression</h1>
+
+<%= form_for(@expression) do |f| %>
+  <%= render 'shared/error_messages', :object => f.object %>
+  
+  <div class="field">
+  	<%= f.label :form %> , e.g., "blanco"<br />
+  	<%= f.text_field :form %>
+  </div>
+  
+
+  <div class="select">
+		<b>Select a language</b><br/> <% @lang_names = [] %>
+	<% @lang_lists = Language.all.collect %>
+	<% @lang_lists.each do |language| %>
+		<% @lang_names << language.name %> 
+	<% end %>
+
+    #:language_id is really language name???
+	<%= f.select :language_id, @lang_names %>
+
+	</div>
+
+
+	<div class="select">
+	  <b>Select a wordlist for the expression</b><br />
+      <% @wl_names = [] %>
+	<% @word_lists = WordList.all.collect %>
+	<% @word_lists.each do |word_list| %>
+		<% @wl_names << word_list.name %> 
+	<% end %>
+
+	<%= f.select :word_list_id, @wl_names %>
+
+	</div>
+    
+    <div class="actions">
+      <br/>
+      <%= f.submit "Create" %>
+    </div>
+ <% end %>
+
+
+

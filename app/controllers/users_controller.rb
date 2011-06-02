@@ -11,12 +11,6 @@ class UsersController < ApplicationController
    
         respond_with(@users)
 
-=begin        
-        respond_to do |format|
-            format.html {render :html => User.all}
-			format.json {render :json => User.all}
-		end
-=end
     end
     
     #sof added this to experiment
