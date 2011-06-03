@@ -33,13 +33,20 @@ class ExpressionsController < ApplicationController
         :language_id=>params[:expression][:language_id], 
         :word_list_id=>params[:expression][:word_list_id]})
 
-      if @expression.save
-        flash[:success] = "Successfully created " + @expression.form
-        redirect_to @expression 
-      end
-
+      
+     if @expression.save
+        respond_with do |format|                                                
+            format.html do                                                      
+              flash[:success] = "Successfully created " + @expression.form
+              redirect_to @expression 
+            end
+                                                                        
+            #for json                                                           
+            format.json {respond_with @expression}                                     
+        end                                                                     
+                                                                                
     end
-
+  end
 end
 
 
