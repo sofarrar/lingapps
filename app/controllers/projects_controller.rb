@@ -22,10 +22,17 @@ class ProjectsController < ApplicationController
 	def create
 		@language = Language.find_by_name(params[:project][:language])
 		
+		@language_id = -1
+		if @language
+			@language_id = @language.id
+		else
+			flash[:error] = "Could not find language.  Are languages loaded in the DB? "
+		end
+		
 		@project = current_user.projects.build(:name => params[:project][:name], 
 			:description => params[:project][:description],	
 			:activity => params[:project][:activity],
-			:language_id => @language.id,
+			:language_id => @language_id,
 			:user_id => current_user.id
 		)
 
