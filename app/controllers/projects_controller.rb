@@ -1,6 +1,8 @@
 class ProjectsController < ApplicationController
 
 	before_filter :authenticate
+	
+	respond_to :html, :json
 
 	def index
 		render 'pages/login'	
@@ -13,6 +15,12 @@ class ProjectsController < ApplicationController
 
 	end
 
+	# kelly -- adding this to get all projects for a user
+	def query	
+		@projects = Project.find_all_by_user_id(params[:user_id])
+		
+		respond_with(@projects)
+    end
 
 
 	def new
