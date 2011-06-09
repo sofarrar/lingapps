@@ -1,6 +1,8 @@
 class ProjectsController < ApplicationController
 
-	before_filter :authenticate
+	# TODO kelly -- how should we get beyond authentication for query?
+	# should we do a custom authentication in 'query' or should we add something to 'signed_in?' in sessions_helper.rb?
+	before_filter :authenticate, :except => [:query]
 	
 	respond_to :html, :json
 
