@@ -18,7 +18,25 @@ module SessionsHelper
 	end
 
   def signed_in?
-    !current_user.nil?
+    
+	# TODO kelly -- ask Scott why this code was causing problems being in this function.  i thought it would be harmless...
+	
+	# if a user_id and salt have been provided, let's try to authenticate on them...
+	#if params[:user_id] and params[:salt]
+	#	current_user = User.authenticate_with_salt(params[:user_id], params[:salt])
+	#end
+	
+	!current_user.nil?
+  end
+  
+  def signed_in_salt?
+    
+	# if a user_id and salt have been provided, let's try to authenticate on them...
+	if params[:user_id] and params[:salt]
+		current_user = User.authenticate_with_salt(params[:user_id], params[:salt])
+	end
+	
+	!current_user.nil?
   end
 
   def sign_out

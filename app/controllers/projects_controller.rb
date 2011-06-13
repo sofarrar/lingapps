@@ -1,6 +1,11 @@
 class ProjectsController < ApplicationController
 
-	before_filter :authenticate
+	# TODO kelly -- how should we get beyond authentication for query?
+	# should we do a custom authentication in 'query' or should we add something to 'signed_in?' in sessions_helper.rb?
+	before_filter :authenticate, :except => [:query]
+	before_filter :authenticate_salt, :only => [:query]
+	
+	respond_to :html, :json
 
 	def index
 		render 'pages/login'	
@@ -13,6 +18,12 @@ class ProjectsController < ApplicationController
 
 	end
 
+	# kelly -- adding this to get all projects for a user
+	def query	
+		@projects = Project.find_all_by_user_id(params[:user_id])
+		
+		respond_with(@projects)
+    end
 
 
 	def new
@@ -22,10 +33,17 @@ class ProjectsController < ApplicationController
 	def create
 		@language = Language.find_by_name(params[:project][:language])
 		
+		@language_id = -1
+		if @language
+			@language_id = @language.id
+		else
+			flash[:error] = "Could not find language.  Are languages loaded in the DB? "
+		end
+		
 		@project = current_user.projects.build(:name => params[:project][:name], 
 			:description => params[:project][:description],	
 			:activity => params[:project][:activity],
-			:language_id => @language.id,
+			:language_id => @language_id,
 			:user_id => current_user.id
 		)
 
@@ -44,6 +62,8 @@ class ProjectsController < ApplicationController
       deny_access unless signed_in?
     end
 
-
+	def authenticate_salt
+      deny_access unless signed_in_salt?
+    end
 
 end
