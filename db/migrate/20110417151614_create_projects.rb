@@ -6,7 +6,6 @@ class CreateProjects < ActiveRecord::Migration
 			t.string :activity
       t.integer :language_id
 			t.integer :word_list_id
-			t.integer :participant_id
 			t.integer :user_id
 			t.timestamps
     end
