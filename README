@@ -1,3 +1,18 @@
 LingApps
 
 A place for mobile apps for linguistics.
+
+---------------------------
+Windows configuration notes
+---------------------------
+To set up development on Windows, the following files\lines need to be changed : 
+
+Gemfile
+-gem 'sqlite3'
++#gem 'sqlite3'
++gem 'jdbc-sqlite3'
++gem 'activerecord-jdbcsqlite3-adapter'
+
+config/database.yml(for all configs in this .yml file) 
+-  adapter: sqlite3
++  adapter: jdbcsqlite3
