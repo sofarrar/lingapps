@@ -52,6 +52,14 @@ class ProjectsController < ApplicationController
       flash[:success] = "Successfully created "+@project.name
       redirect_to @project
      end
+		else
+			flash[:error] = "Could not find language.  Are languages loaded in the DB? "
+
+		
+     if @project.save
+      flash[:success] = "Successfully created "+@project.name
+      redirect_to @project
+	 end
   end
 
 
