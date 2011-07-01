@@ -6,6 +6,7 @@ Lingapps::Application.routes.draw do
 
     match '/users/query', :to => 'users#query'
 	match '/projects/query', :to => 'projects#query'
+	match '/expressions/query', :to => 'expressions#query'
 
     resources :users
 	resources :sessions, :only => [:new, :create, :destroy]

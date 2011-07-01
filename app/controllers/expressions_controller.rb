@@ -19,6 +19,13 @@ class ExpressionsController < ApplicationController
     def new
         @expression = Expression.new
     end
+	
+	# kelly -- adding this to get all projects for a user
+	def query	
+		@expressions = Expression.find_all_by_project_id(params[:project_id])
+		
+		respond_with(@expressions)
+    end
 
     def create
       @language = Language.find_by_name(params[:expression][:language_id])
