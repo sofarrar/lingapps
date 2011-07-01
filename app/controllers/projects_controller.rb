@@ -60,8 +60,6 @@ class ProjectsController < ApplicationController
 		@language_id = -1
 		if @language
 			@language_id = @language.id
-		else
-			flash[:error] = "Could not find language.  Are languages loaded in the DB? "
 		end
 		
 		@project = current_user.projects.build(:name => params[:project][:name], 
@@ -70,12 +68,6 @@ class ProjectsController < ApplicationController
 			:language_id => @language_id,
 			:user_id => current_user.id
 		)
-
-		
-     if @project.save
-      flash[:success] = "Successfully created "+@project.name
-      redirect_to @project
-	 end
 	 
   end
 
