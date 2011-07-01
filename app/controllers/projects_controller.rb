@@ -52,6 +52,22 @@ class ProjectsController < ApplicationController
 			redirect_to @project
 		end
 	end
+	
+	def create_salt
+		@language = Language.find_by_name(params[:project][:language])
+		
+		@language_id = -1
+		if @language
+			@language_id = @language.id
+		end
+		
+		@project = current_user.projects.build(:name => params[:project][:name], 
+			:description => params[:project][:description],	
+			:activity => params[:project][:activity],
+			:language_id => @language_id,
+			:user_id => current_user.id
+		)
+	end
 
 
 
