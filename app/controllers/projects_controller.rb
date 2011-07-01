@@ -54,21 +54,9 @@ class ProjectsController < ApplicationController
 	end
 	
 	def create_salt
-		@language = Language.find_by_name(params[:project][:language])
+		@projects = Project.find_all_by_user_id(params[:user_id])
 		
-		@language_id = -1
-		if @language
-			@language_id = @language.id
-		end
-		
-		@project = projects.build(:name => params[:project][:name], 
-			:description => params[:project][:description],	
-			:activity => params[:project][:activity],
-			:language_id => @language_id,
-			:user_id => params[:user_id]
-		)
-		
-		@project.save
+		respond_with(@projects)
 	end
 
 
