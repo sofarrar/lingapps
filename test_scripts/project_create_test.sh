@@ -1,2 +1,0 @@
-#!/bin/sh
-curl -H 'Content-Type: application/json' -H 'Accept: application/json' -X POST http://growing-meadow-59.heroku.com/projects#create_salt -d "{"project" : {"language" : "LANGUAGE_TEST", "name" : "NAME_TEST", "description" : "DESCRIPTION_TEST", "activity" : "ACTIVITY_TEST"}}"
