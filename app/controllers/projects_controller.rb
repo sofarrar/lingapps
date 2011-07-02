@@ -2,8 +2,9 @@ class ProjectsController < ApplicationController
 
 	# TODO kelly -- how should we get beyond authentication for query?
 	# should we do a custom authentication in 'query' or should we add something to 'signed_in?' in sessions_helper.rb?
-	#before_filter :authenticate, :except => [:query, :create_salt]
-	#before_filter :authenticate_salt, :only => [:query]
+	
+	before_filter :authenticate, :except => [:query, :create_salt]
+	before_filter :authenticate_salt, :only => [:query, :create_salt]
 	
 	respond_to :html, :json
 
@@ -53,10 +54,34 @@ class ProjectsController < ApplicationController
 		end
 	end
 	
-	def create_salt
-		@projects = Project.find_all_by_user_id(params[:user_id])
+	def createsalt
+		@language = Language.find_by_name(params[:project][:language])
 		
-		respond_with(@projects)
+		@language_id = -1
+		if @language
+			@language_id = @language.id
+		end
+		
+		@user = User.find_by_id(params[:user_id])
+		
+		@project = @user.projects.build(:name => params[:project][:name], 
+			:description => params[:project][:description],	
+			:activity => params[:project][:activity],
+			:language_id => @language_id,
+			:user_id => params[:user_id]
+		)
+		
+		if @project.save
+			respond_with do |format|                                                
+				format.html do                                                      
+					redirect_to @project 
+				end
+                                                                        
+				#for json                                                           
+				format.json {respond_with @project}                                     
+			end                                                                                                                                       
+		end
+		
 	end
 
 
