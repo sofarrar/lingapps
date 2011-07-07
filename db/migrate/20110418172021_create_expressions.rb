@@ -3,7 +3,6 @@ class CreateExpressions < ActiveRecord::Migration
     create_table :expressions do |t|
       t.string :form
       t.references :language
-			t.references :word_list
       t.timestamps
     end
   end
