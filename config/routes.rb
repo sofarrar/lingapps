@@ -5,6 +5,7 @@ Lingapps::Application.routes.draw do
   get "sessions/new"
 
     match '/users/query', :to => 'users#query'
+	match '/translations/create', :to => 'translations#create'
 	match '/projects/query', :to => 'projects#query'
 	match '/projects/createsalt', :to => 'projects#createsalt'
 
