@@ -38,7 +38,11 @@ class TranslationsController < ApplicationController
 		@target_exp.save
 	
 		# now let's associate these into a translation in the project...
-		@project = Project.find_by_id(params[:translation][:project_id])
+		#@project = Project.find_by_id(params[:translation][:project_id])
+		
+		# TODO -- remove this as soon as I figure out how to get the new project IDs on Android in its async way
+		@project = Project.find(:first)
+		
 		# TODO -- do i want to pass in the expression IDs or the expressions themselves?
 		@translation = @project.translations.build(:source => @source_exp, :target => @target_exp)
 		
