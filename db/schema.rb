@@ -48,11 +48,14 @@ ActiveRecord::Schema.define(:version => 20110429023909) do
   end
 
   create_table "translations", :force => true do |t|
+    t.integer  "project_id"
     t.integer  "source_id"
     t.integer  "target_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "translations", ["project_id"], :name => "index_translations_on_project_id"
 
   create_table "users", :force => true do |t|
     t.string   "name"
