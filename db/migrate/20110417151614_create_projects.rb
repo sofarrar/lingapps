@@ -1,7 +1,9 @@
 class CreateProjects < ActiveRecord::Migration
   def self.up
     create_table :projects do |t|
-      t.string :name
+      t.integer :local_id
+	  t.boolean :deleted, :default => false
+	  t.string :name
       t.string :description
 			t.string :activity
       t.integer :language_id

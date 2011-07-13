@@ -15,7 +15,6 @@ ActiveRecord::Schema.define(:version => 20110429023909) do
   create_table "expressions", :force => true do |t|
     t.string   "form"
     t.integer  "language_id"
-    t.integer  "word_list_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -36,19 +35,21 @@ ActiveRecord::Schema.define(:version => 20110429023909) do
   end
 
   create_table "projects", :force => true do |t|
+    t.integer  "local_id"
+    t.boolean  "deleted",     :default => false
     t.string   "name"
     t.string   "description"
     t.string   "activity"
     t.integer  "language_id"
-    t.integer  "word_list_id"
-    t.integer  "participant_id"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
   create_table "translations", :force => true do |t|
+    t.integer  "local_id"
     t.integer  "project_id"
+    t.boolean  "deleted",    :default => false
     t.integer  "source_id"
     t.integer  "target_id"
     t.datetime "created_at"

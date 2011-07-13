@@ -1,7 +1,9 @@
 class CreateTranslations < ActiveRecord::Migration
   def self.up
     create_table :translations do |t|
+		t.integer :local_id
 		t.integer :project_id
+		t.boolean :deleted, :default => false
       t.references :source
       t.references :target
 
