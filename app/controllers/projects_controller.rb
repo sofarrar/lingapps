@@ -77,7 +77,14 @@ class ProjectsController < ApplicationController
 			Logger.new(STDOUT).info('createjson -- local date : ' + @local_updated.to_s)
 			
 			if @local_updated > @project.updated_at
-				Logger.new(STDOUT).info('createjson -- Local project is newer')
+				Logger.new(STDOUT).info('createjson -- Local project is newer, updating the Heroku project...')
+				
+				# updating the project to be saved down below...
+				@project.name = params[:project][:name]
+				@project.description = params[:project][:description]
+				@project.activity = params[:project][:activity]
+				@project.local_id = @local_id
+				
 			else
 				Logger.new(STDOUT).info('createjson -- Heroku project is newer')
 			end
