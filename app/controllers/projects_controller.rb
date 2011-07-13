@@ -64,16 +64,33 @@ class ProjectsController < ApplicationController
 		
 		@user = User.find_by_id(params[:user_id])
 		
-		# TODO -- use these to see if the project already exists before we BUILD it below...
 		@local_id = params[:project][:local_id]
-		@id = params[:project][:id]
 		
-		@project = @user.projects.build(:name => params[:project][:name], 
-			:description => params[:project][:description],	
-			:activity => params[:project][:activity],
-			:language_id => @language_id,
-			:user_id => params[:user_id]
-		)
+		@id = params[:project][:id]
+		@project = Project.find_by_id(@id)
+		if @project
+		
+			@local_updated = Time.parse(params[:project][:local_updated]).utc
+			Logger.new(STDOUT).info('createjson -- project exists')
+			# this has to be converted to a string...
+			Logger.new(STDOUT).info('createjson -- remote date : ' + @project.updated_at.to_s)
+			Logger.new(STDOUT).info('createjson -- local date : ' + @local_updated.to_s)
+			
+			if @local_updated > @project.updated_at
+				Logger.new(STDOUT).info('createjson -- Local project is newer')
+			else
+				Logger.new(STDOUT).info('createjson -- Heroku project is newer')
+			end
+			
+		else
+			@project = @user.projects.build(:name => params[:project][:name], 
+				:description => params[:project][:description],	
+				:activity => params[:project][:activity],
+				:language_id => @language_id,
+				:user_id => params[:user_id],
+				:local_id => @local_id
+			)
+		end
 		
 		if @project.save
 			respond_with do |format|                                                
