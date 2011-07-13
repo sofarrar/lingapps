@@ -7,7 +7,7 @@ Lingapps::Application.routes.draw do
     match '/users/query', :to => 'users#query'
 	match '/translations/create', :to => 'translations#create'
 	match '/projects/query', :to => 'projects#query'
-	match '/projects/createsalt', :to => 'projects#createsalt'
+	match '/projects/createjson', :to => 'projects#createjson'
 
     resources :users
 	resources :sessions, :only => [:new, :create, :destroy]
