@@ -76,6 +76,8 @@ class ProjectsController < ApplicationController
 			Logger.new(STDOUT).info('createjson -- remote date : ' + @project.updated_at.to_s)
 			Logger.new(STDOUT).info('createjson -- local date : ' + @local_updated.to_s)
 			
+			# TODO -- the Heroku is always newer when it is within an hour.
+			# can i subtract an hour or so from the Heroku time here???
 			if @local_updated > @project.updated_at
 				Logger.new(STDOUT).info('createjson -- Local project is newer, updating the Heroku project...')
 				
