@@ -4,6 +4,9 @@ class CreateTranslations < ActiveRecord::Migration
 		t.integer :local_id
 		t.integer :project_id
 		t.boolean :deleted, :default => false
+		t.string :pos
+		t.string :tags
+		t.string :notes
       t.references :source
       t.references :target
 

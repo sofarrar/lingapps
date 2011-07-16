@@ -39,9 +39,44 @@ class TranslationsController < ApplicationController
 	
 		# now let's associate these into a translation in the project...
 		@project = Project.find_by_id(params[:translation][:project_id])
+			
+		@local_id = params[:translation][:local_id]
 		
-		# TODO -- do i want to pass in the expression IDs or the expressions themselves?
-		@translation = @project.translations.build(:source => @source_exp, :target => @target_exp)
+		@id = params[:translation][:id]
+		@translation = Translation.find_by_id(@id)
+		if @translation
+		
+			@local_updated = Time.parse(params[:translation][:local_updated]).utc
+			Logger.new(STDOUT).info('createjson -- translation exists')
+			# this has to be converted to a string...
+			Logger.new(STDOUT).info('createjson -- remote date : ' + @translation.updated_at.to_s)
+			Logger.new(STDOUT).info('createjson -- local date : ' + @local_updated.to_s)
+			
+			if @local_updated > @translation.updated_at.beginning_of_day
+				Logger.new(STDOUT).info('createjson -- Local translation is newer, updating the Heroku translation...')
+				
+				# updating the translation to be saved down below...
+				@translation.source = @source_exp
+				@translation.target = @target_exp
+				@translation.local_id = @local_id
+				@translation.pos = params[:translation][:pos]
+				@translation.tags = params[:translation][:tags]
+				@translation.notes = params[:translation][:notes]
+				
+			else
+				Logger.new(STDOUT).info('createjson -- Heroku translation is newer')
+			end
+			
+		else
+			Logger.new(STDOUT).info('createjson -- Building a new translation')
+			
+			@translation = @project.translations.build(:source => @source_exp, 
+				:target => @target_exp, 
+				:local_id => @local_id,
+				:pos => params[:translation][:pos], 
+				:tags => params[:translation][:tags],
+				:notes => params[:translation][:notes])
+		end
 		
 		if @translation.save
 			respond_with do |format|                                                
