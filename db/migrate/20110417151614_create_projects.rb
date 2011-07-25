@@ -8,6 +8,7 @@ class CreateProjects < ActiveRecord::Migration
 			t.string :activity
       t.integer :language_id
 			t.integer :user_id
+			t.datetime :project_date
 			t.timestamps
     end
   end

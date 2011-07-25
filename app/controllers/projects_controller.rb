@@ -84,6 +84,7 @@ class ProjectsController < ApplicationController
 				@project.description = params[:project][:description]
 				@project.activity = params[:project][:activity]
 				@project.local_id = @local_id
+				@project.project_date = params[:project][:project_date]
 				
 			else
 				Logger.new(STDOUT).info('createjson -- Heroku project is newer')
@@ -95,7 +96,8 @@ class ProjectsController < ApplicationController
 				:activity => params[:project][:activity],
 				:language_id => @language_id,
 				:user_id => params[:user_id],
-				:local_id => @local_id
+				:local_id => @local_id,
+				:project_date => params[:project][:project_date]
 			)
 		end
 		
